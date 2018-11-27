@@ -14,7 +14,7 @@ class SearchTableContainer extends Component {
   constructor() {
     super();
     this.state = {
-      name:'',
+      name:'espn',
       data: [],
       autoSuggest: []
     };
@@ -35,7 +35,7 @@ class SearchTableContainer extends Component {
     const route = `/api/search?name=${this.state.name.toUpperCase()}`
     axios
       .get(route)
-      .then(res => console.log("search: ", res.data))
+      .then(res => this.setState({data: res.data}))
   }
 
   render() {

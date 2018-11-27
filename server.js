@@ -6,19 +6,25 @@ let varTree = {};
 let keys = {};
 
 fs.readFile("./variants.tsv", "utf8", function(error, data) {
+  if (error) {
+    throw err;
+  }
   //parse tsv into array of objects
   const parsedData = d3.tsvParse(data);
 
   //convert array of objects to object of arrays for faster search
   parsedData.forEach(row => {
-    if(varTree[row.Gene]) {
-      varTree[row.Gene].push(row);
+    const geneName = row.Gene? row.Gene.toUpperCase() : "NoName";
+
+    if(varTree[geneName]) {
+      varTree[geneName].push(row);
     } else {
-      varTree[row.Gene] = [];
-      varTree[row.Gene].push(row);
+      varTree[geneName] = [];
+      varTree[geneName].push(row);
     }
   })
 
+  // create arrays of keys and number of results for autosuggestion
   Object.keys(varTree).forEach(key => {
     keys[key] = varTree[key].length;
   })
