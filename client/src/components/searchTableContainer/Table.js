@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Table } from 'semantic-ui-react'
 
-class Table extends Component {
+
+class DataTable extends Component {
   constructor() {
     super();
     this.state = {
@@ -8,19 +10,49 @@ class Table extends Component {
   }
 
   render() {
+    const { data } = this.props;
+    console.log('data: ', data);
+    const headers = data[0]? Object.keys(data[0]) : [];
+    console.log('headers: ', headers);
+
     return (
+
       <div>
-        {this.props.data.map((row, idx) => {
+        {/* {this.props.data.map((row, idx) => {
           return(
             <div key={idx}>
               {JSON.stringify(row)}
             </div>
           )
-        })}
+        })} */}
+        <Table fixed>
+          <Table.Header>
+            <Table.Row>
+              {headers.map(title => <Table.HeaderCell>{title}</Table.HeaderCell>)}
+            </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {data && data.map(row => {
+              return (
+                <Table.Row>
+                  {headers.map(title => {
+                    return (
+                      <Table.Cell>
+                        {row[title]}
+                      </Table.Cell>
+                    )
+                  })}
+                </Table.Row>
+              )
+            })}
+          </Table.Body>
+        </Table>
+
       </div>
     );
   }
 }
 
-export default Table;
+export default DataTable;
 

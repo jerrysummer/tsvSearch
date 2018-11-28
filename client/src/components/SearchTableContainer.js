@@ -5,7 +5,7 @@ import ReactAutocomplete from 'react-autocomplete'
 
 
 import SearchInput from './searchTableContainer/SearchInput';
-import Table from './searchTableContainer/Table';
+import DataTable from './searchTableContainer/Table';
 
 const Wrapper = Styled.div`
   height: fit-content;
@@ -45,7 +45,7 @@ class SearchTableContainer extends Component {
   }
 
   handleSelect = (name) => {
-    this.setState({name})
+    this.setState({name}, () => this.makeQuery(name))
   }
 
   render() {
@@ -53,9 +53,14 @@ class SearchTableContainer extends Component {
       <Wrapper>
         <form onSubmit={this.handleSubmit} >
           <ReactAutocomplete
-            items={this.state.autoSuggestVals.map(val => {return({id:val, label:val})})}
-            shouldItemRender={(item, value) => this.state.name && item.label.toLowerCase().indexOf(value.toLowerCase()) > -1}
-            getItemValue={item => item.label}
+            items={this.state.autoSuggestVals.map(val => {
+              return({id:val.key, label:`${val.key} (${val.count})`})
+            })}
+            shouldItemRender={(item, value) => 
+              this.state.name && 
+              item.label.toLowerCase().indexOf(value.toLowerCase()) > -1
+            }
+            getItemValue={item => item.id}
             renderItem={(item, highlighted) =>
               <div
               key={item.id}
@@ -65,13 +70,13 @@ class SearchTableContainer extends Component {
               </div>
             }
             value={this.state.name}
-            onChange={e => this.setState({ name: e.target.value })}
+            onChange={this.handleChange}
             onSelect={this.handleSelect}
             inputProps={{placeholder: "Type here to search..."}}
           />
         </form>
 
-        <Table
+        <DataTable
           data={this.state.data}
         />
       </Wrapper>

@@ -3,7 +3,7 @@ const fs = require("fs");
 const d3 = require("d3");
 
 let variantTree = {};
-let possibleValues = [];
+let autoSuggestVals = [];
 
 fs.readFile("./variants.tsv", "utf8", function(error, data) {
   if (error) {
@@ -25,7 +25,11 @@ fs.readFile("./variants.tsv", "utf8", function(error, data) {
   })
 
   // create arrays of keys and number of results for autosuggestion
-  possibleValues = Object.keys(variantTree);
+  // autoSuggestVals = Object.keys(variantTree);
+  Object.keys(variantTree).forEach(key => {
+    let val = { key, count: variantTree[key].length};
+    autoSuggestVals.push(val);
+  });
 });
 
 
@@ -37,7 +41,7 @@ app.get('/api/search', (req, res) => {
 });
 
 app.get('/api/autosuggest', (req, res) => {
-  res.json(possibleValues);
+  res.json(autoSuggestVals);
 });
 
 const port = 5000;
