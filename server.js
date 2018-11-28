@@ -2,32 +2,30 @@ const express = require('express');
 const fs = require("fs");
 const d3 = require("d3");
 
-let varTree = {};
-let keys = {};
+let variantTree = {};
+let possibleValues = [];
 
 fs.readFile("./variants.tsv", "utf8", function(error, data) {
   if (error) {
     throw err;
   }
   //parse tsv into array of objects
-  const parsedData = d3.tsvParse(data);
+  const variantArray = d3.tsvParse(data);
 
   //convert array of objects to object of arrays for faster search
-  parsedData.forEach(row => {
+  variantArray.forEach(row => {
     const geneName = row.Gene? row.Gene.toUpperCase() : "NoName";
 
-    if(varTree[geneName]) {
-      varTree[geneName].push(row);
+    if(variantTree[geneName]) {
+      variantTree[geneName].push(row);
     } else {
-      varTree[geneName] = [];
-      varTree[geneName].push(row);
+      variantTree[geneName] = [];
+      variantTree[geneName].push(row);
     }
   })
 
   // create arrays of keys and number of results for autosuggestion
-  Object.keys(varTree).forEach(key => {
-    keys[key] = varTree[key].length;
-  })
+  possibleValues = Object.keys(variantTree);
 });
 
 
@@ -35,11 +33,11 @@ const app = express();
 
 app.get('/api/search', (req, res) => {
   const { name } = req.query;
-  res.json(varTree[name]);
+  res.json(variantTree[name]);
 });
 
 app.get('/api/autosuggest', (req, res) => {
-  res.json(keys);
+  res.json(possibleValues);
 });
 
 const port = 5000;

@@ -10,9 +10,11 @@ class Table extends Component {
   render() {
     return (
       <div>
-        {this.props.data.map(row => {
+        {this.props.data.map((row, idx) => {
           return(
-            <div>{JSON.stringify(row)}</div>
+            <div key={idx}>
+              {JSON.stringify(row)}
+            </div>
           )
         })}
       </div>

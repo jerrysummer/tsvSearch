@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import ReactAutocomplete from 'react-autocomplete'
 
 
 class SearchInput extends Component {
@@ -12,13 +12,22 @@ class SearchInput extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit}>
-          <label>
-            Name:
-            <input type="text" value={this.props.name} onChange={this.props.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+      <ReactAutocomplete
+        items={this.props.autoSuggestVals.map(val => {return({id:val, label:val})})}
+        shouldItemRender={(item, value) => item.label.toLowerCase().indexOf(value.toLowerCase()) > -1}
+        getItemValue={item => item.label}
+        renderItem={(item, highlighted) =>
+          <div
+            key={item.id}
+            style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
+          >
+            {item.label}
+          </div>
+        }
+        value={this.props.name}
+        onChange={e => this.setState({ value: e.target.value })}
+        onSelect={value => this.setState({ value })}
+      />
       </div>
     );
   }
