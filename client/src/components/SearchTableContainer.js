@@ -6,7 +6,6 @@ import ReactAutocomplete from 'react-autocomplete'
 // -----------------------------------------------------------------------------------------
 // -------------------------------------- Local imports ------------------------------------
 // -----------------------------------------------------------------------------------------
-import SearchInput from './searchTableContainer/SearchInput';
 import DataTable from './searchTableContainer/Table';
 
 // -----------------------------------------------------------------------------------------
@@ -16,6 +15,12 @@ import DataTable from './searchTableContainer/Table';
 const Wrapper = Styled.div`
   height: fit-content;
   width: fit-content;
+  font-size: 12px;
+`
+
+const InputWrapper = Styled.div`
+  float: left;
+  margin-bottom: 10px;
 `
 
 // -----------------------------------------------------------------------------------------
@@ -70,33 +75,35 @@ class SearchTableContainer extends Component {
   render() {
     return (
       <Wrapper>
-        <form onSubmit={this.handleSubmit} >
-          <ReactAutocomplete
-            items={this.state.autoSuggestVals.map(val => {
-              return({
-                id:val.key, 
-                label:`${val.key} (${val.count})`
-              })
-            })}
-            shouldItemRender={(item, value) => 
-              this.state.name && 
-              item.label.toLowerCase().indexOf(value.toLowerCase()) > -1
-            }
-            getItemValue={item => item.id}
-            renderItem={(item, highlighted) =>
-              <div
-                key={item.id}
-                style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
-              >
-                {item.label}
-              </div>
-            }
-            value={this.state.name}
-            onChange={this.handleChange}
-            onSelect={this.handleSelect}
-            inputProps={{placeholder: "Type here to search..."}}
-          />
-        </form>
+        <InputWrapper>
+          <form onSubmit={this.handleSubmit} >
+            <ReactAutocomplete
+              items={this.state.autoSuggestVals.map(val => {
+                return({
+                  id:val.key, 
+                  label:`${val.key} (${val.count})`
+                })
+              })}
+              shouldItemRender={(item, value) => 
+                this.state.name && 
+                item.label.toLowerCase().indexOf(value.toLowerCase()) > -1
+              }
+              getItemValue={item => item.id}
+              renderItem={(item, highlighted) =>
+                <div
+                  key={item.id}
+                  style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
+                >
+                  {item.label}
+                </div>
+              }
+              value={this.state.name}
+              onChange={this.handleChange}
+              onSelect={this.handleSelect}
+              inputProps={{placeholder: "Type here to search..."}}
+            />
+          </form>
+        </InputWrapper>
 
         <DataTable
           data={this.state.data}

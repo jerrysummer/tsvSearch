@@ -15,38 +15,23 @@ class DataTable extends Component {
     const { data } = this.props;
 
     return (
+      <Table 
+        striped 
+        compact='very'
+      >
+        <Table.Header>
+          <Table.Row>
+            {headersShown.map(header => <Table.HeaderCell>{header}</Table.HeaderCell>)}
+          </Table.Row>
+        </Table.Header>
 
-      <div>
+        <Table.Body>
 
-        <Table fixed>
-          <Table.Header>
-            <Table.Row>
-              {headersShown.map(header => <Table.HeaderCell>{header}</Table.HeaderCell>)}
-            </Table.Row>
-          </Table.Header>
+          {data && data.map(row => <TableRow row={row}/>)}
 
-          <Table.Body>
+        </Table.Body>
+      </Table>
 
-            {/* {data && data.map(row => <TableRow row={row}/>)} */}
-
-            {data && data.map(row => {
-              return (
-                <Table.Row>
-                  {headersShown.map(title => {
-                    return (
-                      <Table.Cell>
-                        {row[title]}
-                      </Table.Cell>
-                    )
-                  })}
-                </Table.Row>
-              )
-            })}
-
-          </Table.Body>
-        </Table>
-
-      </div>
     );
   }
 }

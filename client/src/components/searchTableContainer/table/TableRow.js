@@ -5,6 +5,7 @@ import { Table } from 'semantic-ui-react'
 // -------------------------------------- Local imports ------------------------------------
 // -----------------------------------------------------------------------------------------
 import TableCell from './tableRow/TableCell';
+import { headersShown } from '../../../utils/constants';
 
 // -----------------------------------------------------------------------------------------
 // -------------------------- SearchTableContainer Components ------------------------------
@@ -23,13 +24,7 @@ class DataTable extends Component {
     const { row } = this.props;
     return (
       <Table.Row>
-        {Object.keys(row).map(label => {
-          return (
-            <Table.Cell>
-              {row[label]}
-            </Table.Cell>
-          )
-        })}
+        {headersShown.map(header => <TableCell header={header} value={row[header]} />)}
       </Table.Row>
     );
   }

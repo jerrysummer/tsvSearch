@@ -1,13 +1,14 @@
 export const headersShown = [
   "Gene",
   "Nucleotide Change",
+  "Other Mappings",
   "Protein Change",
   "Alias",
   "Region",
   "Last Evaluated",
   "Last Updated",
   "Reported Classification",
-  "URL"
+  "URL",
   // "Accession",
   // "Alt",
   // "Assembly",
@@ -15,7 +16,6 @@ export const headersShown = [
   // "Genomic Start",
   // "Genomic Stop",
   // "Inferred Classification",
-  // "Other Mappings",
   // "Ref",
   // "Reported Alt",
   // "Reported Ref",
