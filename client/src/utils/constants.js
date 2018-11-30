@@ -1,6 +1,6 @@
 export const headersShown = [
   "Gene",
-  "Nucleotide Change",
+  // "Nucleotide Change",
   "Other Mappings",
   "Protein Change",
   "Alias",
