@@ -92,7 +92,7 @@ class TableCell extends Component {
 
     return (
       <Table.Cell>
-        {value}
+        {value? value: "-"}
       </Table.Cell>
     )
   }
