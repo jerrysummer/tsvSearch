@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react'
 
-import TableRow from './table/TableRow'
+import TableRow from './table/TableRow';
+import { headersShown } from '../../utils/constants';
 
 class DataTable extends Component {
   constructor() {
@@ -12,7 +13,6 @@ class DataTable extends Component {
 
   render() {
     const { data } = this.props;
-    const headers = data[0]? Object.keys(data[0]) : [];
 
     return (
 
@@ -21,7 +21,7 @@ class DataTable extends Component {
         <Table fixed>
           <Table.Header>
             <Table.Row>
-              {headers.map(title => <Table.HeaderCell>{title}</Table.HeaderCell>)}
+              {headersShown.map(header => <Table.HeaderCell>{header}</Table.HeaderCell>)}
             </Table.Row>
           </Table.Header>
 
@@ -32,7 +32,7 @@ class DataTable extends Component {
             {data && data.map(row => {
               return (
                 <Table.Row>
-                  {headers.map(title => {
+                  {headersShown.map(title => {
                     return (
                       <Table.Cell>
                         {row[title]}
