@@ -21,14 +21,12 @@ class DataTable extends Component {
       >
         <Table.Header>
           <Table.Row>
-            {headersShown.map(header => <Table.HeaderCell>{header}</Table.HeaderCell>)}
+            {headersShown.map(header => <Table.HeaderCell key={header}>{header}</Table.HeaderCell>)}
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
-
-          {data && data.map(row => <TableRow row={row}/>)}
-
+          {data && data.map((row, idx) => <TableRow row={row} key={idx}/>)}
         </Table.Body>
       </Table>
 
