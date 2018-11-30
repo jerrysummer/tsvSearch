@@ -11,20 +11,9 @@ class DataTable extends Component {
 
   render() {
     const { data } = this.props;
-    console.log('data: ', data);
     const headers = data[0]? Object.keys(data[0]) : [];
-    console.log('headers: ', headers);
-
     return (
-
       <div>
-        {/* {this.props.data.map((row, idx) => {
-          return(
-            <div key={idx}>
-              {JSON.stringify(row)}
-            </div>
-          )
-        })} */}
         <Table fixed>
           <Table.Header>
             <Table.Row>
@@ -48,7 +37,6 @@ class DataTable extends Component {
             })}
           </Table.Body>
         </Table>
-
       </div>
     );
   }

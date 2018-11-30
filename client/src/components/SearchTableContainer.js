@@ -26,6 +26,7 @@ class SearchTableContainer extends Component {
     axios
       .get('/api/autosuggest')
       .then(res => this.setState({autoSuggestVals : res.data}))
+      .catch(err => console.log(err))
   }
 
   handleChange = (event) => {
@@ -42,6 +43,7 @@ class SearchTableContainer extends Component {
     axios
       .get(route)
       .then(res => this.setState({data: res.data}))
+      .catch(err => console.log(err.response))
   }
 
   handleSelect = (name) => {
