@@ -24,7 +24,7 @@ class DataTable extends Component {
     const { row } = this.props;
     return (
       <Table.Row>
-        {headersShown.map(header => <TableCell header={header} value={row[header]} />)}
+        {headersShown.map(header => <TableCell header={header} value={row[header]} key={header} />)}
       </Table.Row>
     );
   }
