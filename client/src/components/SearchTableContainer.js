@@ -3,30 +3,43 @@ import axios from 'axios';
 import Styled from 'styled-components'
 import ReactAutocomplete from 'react-autocomplete'
 
-
+// -----------------------------------------------------------------------------------------
+// -------------------------------------- Local imports ------------------------------------
+// -----------------------------------------------------------------------------------------
 import SearchInput from './searchTableContainer/SearchInput';
 import DataTable from './searchTableContainer/Table';
+
+// -----------------------------------------------------------------------------------------
+// ------------------------------------ Styled Components ----------------------------------
+// -----------------------------------------------------------------------------------------
 
 const Wrapper = Styled.div`
   height: fit-content;
   width: fit-content;
 `
 
+// -----------------------------------------------------------------------------------------
+// -------------------------- SearchTableContainer Components ------------------------------
+// -----------------------------------------------------------------------------------------
 class SearchTableContainer extends Component {
   constructor() {
     super();
     this.state = {
-      name:'',
+      name:'espn',
       data: [],
-      autoSuggestVals: []
+      autoSuggestVals: [],
+      error: ''
     };
   }
 
+// -----------------------------------------------------------------------------------------
+// --------------------------- Lifecycle and handler methods -------------------------------
+// -----------------------------------------------------------------------------------------
   componentDidMount() {
     axios
       .get('/api/autosuggest')
       .then(res => this.setState({autoSuggestVals : res.data}))
-      .catch(err => console.log(err))
+      .catch(err => console.log(err.response))
   }
 
   handleChange = (event) => {
@@ -42,21 +55,28 @@ class SearchTableContainer extends Component {
     const route = `/api/search?name=${name.toUpperCase()}`
     axios
       .get(route)
-      .then(res => this.setState({data: res.data}))
+      .then(res => {
+        this.setState({data: res.data})
+      })
       .catch(err => console.log(err.response))
   }
 
   handleSelect = (name) => {
     this.setState({name}, () => this.makeQuery(name))
   }
-
+// -----------------------------------------------------------------------------------------
+// -------------------------------------- Render -------------------------------------------
+// -----------------------------------------------------------------------------------------
   render() {
     return (
       <Wrapper>
         <form onSubmit={this.handleSubmit} >
           <ReactAutocomplete
             items={this.state.autoSuggestVals.map(val => {
-              return({id:val.key, label:`${val.key} (${val.count})`})
+              return({
+                id:val.key, 
+                label:`${val.key} (${val.count})`
+              })
             })}
             shouldItemRender={(item, value) => 
               this.state.name && 
@@ -65,8 +85,8 @@ class SearchTableContainer extends Component {
             getItemValue={item => item.id}
             renderItem={(item, highlighted) =>
               <div
-              key={item.id}
-              style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
+                key={item.id}
+                style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
               >
                 {item.label}
               </div>

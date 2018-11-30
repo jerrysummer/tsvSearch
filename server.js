@@ -14,7 +14,14 @@ fs.readFile("./variants.tsv", "utf8", function(error, data) {
     throw err;
   }
   //parse tsv into array of objects
-  const variantArray = d3.tsvParse(data);
+  const parsedTSV = d3.tsvParse(data);
+
+  //converts all undefined to null
+  let variantArray = JSON.stringify(parsedTSV, function (key, value) {
+    return (value === undefined) ? null : value}
+  );
+
+  variantArray = JSON.parse(variantArray);
 
   //convert array of objects to object of arrays for faster search
   variantArray.forEach(row => {
@@ -47,6 +54,7 @@ app.get('/api/search', (req, res) => {
   const nameCap = name? name.toUpperCase() : name;
 
   const data = variantTree[nameCap]? variantTree[nameCap] : [];
+
   res.json(data);
 });
 
@@ -56,14 +64,6 @@ app.get('/api/search', (req, res) => {
 app.get('/api/autosuggest', (req, res) => {
   res.json(autoSuggestVals);
 });
-
-/**
- * responds with array of keys
- */
-app.get('/test', (req, res) => {
-  res.json({test:'jerry'});
-});
-
 
 const port = 5000;
 const server = app.listen(port, () => `Server running on port ${port}`);

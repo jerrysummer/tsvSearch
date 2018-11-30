@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react'
 
+import TableRow from './table/TableRow'
 
 class DataTable extends Component {
   constructor() {
@@ -12,8 +13,11 @@ class DataTable extends Component {
   render() {
     const { data } = this.props;
     const headers = data[0]? Object.keys(data[0]) : [];
+
     return (
+
       <div>
+
         <Table fixed>
           <Table.Header>
             <Table.Row>
@@ -22,6 +26,9 @@ class DataTable extends Component {
           </Table.Header>
 
           <Table.Body>
+
+            {/* {data && data.map(row => <TableRow row={row}/>)} */}
+
             {data && data.map(row => {
               return (
                 <Table.Row>
@@ -35,8 +42,10 @@ class DataTable extends Component {
                 </Table.Row>
               )
             })}
+
           </Table.Body>
         </Table>
+
       </div>
     );
   }
