@@ -30,7 +30,7 @@ class SearchTableContainer extends Component {
   constructor() {
     super();
     this.state = {
-      name:'espn',
+      name:'',
       data: [],
       autoSuggestVals: [],
       error: ''
