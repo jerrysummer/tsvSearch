@@ -20,10 +20,6 @@ npm run test
 
 ![Demo](./demo.png)
 
-There are two endpoints:
-* `/api/search:name` This return all the rows of the TSV file with the gene name passed
-* `/autosuggest` This returns all the possible search value in a single array with how many results each name has 
-
 ## API
 There are two endpoints:
 * `/api/search:name` This return all the rows of the TSV file with the gene name passed
@@ -36,7 +32,10 @@ React Autocomplete
 
 ## Proposed Enhancements 
 
+* Make columns shown selectable by user
+* Make api return only choosen columns to reduce response time
 * Make the auto-suggest api return only a subset of matching keyworks for scaling to large datasets
+* Structure auto-suggest data into a tree structure for faster search
 * Auto-suggest uses more advanced regex that doesn't require continous or adjacent letters to match
 * Make table paginate 
 * Make server response paginate if data size warrants
