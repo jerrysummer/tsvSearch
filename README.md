@@ -26,9 +26,10 @@ There are two endpoints:
 * `/autosuggest` This returns all the possible search value in a single array with how many results each name has 
             
 ## Built with
-React 
-Semantic UI React
-React Autocomplete
+* React 
+* Semantic UI React
+* React Autocomplete
+* Node
 
 ## Proposed Enhancements 
 
